@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model RepositorioLogo {
+  idLogo String @id @default(uuid())
+  imagem String
+  loginCliente String
+}
+
+model RepositorioProjeto {
+  idProjeto String @id @default(uuid())
+  loginCliente String 
+  loginDesigner String
+  idLogo String
+  msgAlteracao String
+  status String
+  dataSolicitacao String
+  dataConclusao String 
+}
+
+model RepositorioAcesso {
+  login String @id
+  senha String
+}
+
+
+
