@@ -1,5 +1,5 @@
 export class CreateLogoDto {
-    idLogo: string
+    idLogo?: string
     imagem: string
     loginCliente: string
 }

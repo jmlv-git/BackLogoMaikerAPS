@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { LogoService } from './logo.service';
 import { CreateLogoDto } from './dto/create-logo.dto';
 import { UpdateLogoDto } from './dto/update-logo.dto';
+import ProcessadorConverterFormulario from './iProcessadorChainHandlers/ProcessadorConverterFormulario';
+import GerarDescricaoGpt from './iProcessadorChainHandlers/ProcessadorGerarDescricao';
 
 @Controller('logo')
 export class LogoController {
@@ -9,7 +11,18 @@ export class LogoController {
 
   @Post()
   async create(@Body() createLogoDto: CreateLogoDto) {
-    const logo = await this.logoService.cadastrarLogo(createLogoDto);
+    
+    let handler_1 = new ProcessadorConverterFormulario ()
+    handler_1.setNext(new GerarDescricaoGpt())
+    let stringFormulario = "ibama##protecao aos animais##preservação da natureza##verde##um macaco"
+    let prompt1 = await handler_1.handler(stringFormulario)
+
+    const logoAux: CreateLogoDto = {
+      imagem:  prompt1,
+      loginCliente: "fefeberotec"
+   }
+    
+    const logo = await this.logoService.cadastrarLogo(logoAux);
     return logo
   }
   
