@@ -1,10 +1,11 @@
 
 interface ISubsistemaComunicacaoTextToImage {
     
+  obterImagemIA(promptBase: string): Promise<string>;
     
-    obterImagemIA(promptBase: string): string;
-    
-  }
+}
+
+export default ISubsistemaComunicacaoTextToImage;
 
   
   

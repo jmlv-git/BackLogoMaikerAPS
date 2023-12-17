@@ -1,3 +1,5 @@
+import IProcessadorChain from "../interfaces/IProcessadorChain";
+
 
 class ProcessadorConverterFormulario implements IProcessadorChain {
     next: IProcessadorChain;
@@ -10,7 +12,7 @@ class ProcessadorConverterFormulario implements IProcessadorChain {
         this.next = processador;
     }
 
-    handler(data: string): string {
+    async handler(data: string): Promise<any>  {
         //DescricaoSimples (tipoOrganizacao, ramoAtuacao, diferenciais)
         //DescricaoCompleta (tipoOrganizacao, ramoAtuacao, diferenciais, coresLogo, elementosLogo)
         let temp:string[] = data.split('##');
@@ -29,3 +31,6 @@ class ProcessadorConverterFormulario implements IProcessadorChain {
     }
     
 }
+
+
+export default ProcessadorConverterFormulario;

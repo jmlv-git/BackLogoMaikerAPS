@@ -1,9 +1,11 @@
 
 interface ISubsistemaComunicacaoTextToText {
     
-    obterPromptIA(promptBase: string): string;
+    obterPromptIA(promptBase: string): Promise<any>;
     
   }
+
+  export default ISubsistemaComunicacaoTextToText;
 
   
   

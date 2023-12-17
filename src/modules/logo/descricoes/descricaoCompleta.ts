@@ -1,13 +1,14 @@
-class descricaoCompleta implements Descricao{
+class DescricaoCompleta implements Descricao{
     tipoOrganizacao : string;
     ramoAtuacao: string;
     diferenciais: string;
     coresLogo: string;
     elementosLogo;
 
-    enviarDescricao(data: string) {
-
-        new
+    criarDescricao(): Descricao {
+        throw new Error("Method not implemented.");
     }
+
+    
 
 }
