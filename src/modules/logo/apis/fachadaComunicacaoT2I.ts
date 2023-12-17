@@ -19,8 +19,13 @@ class FachadaComunicacaoT2I implements ISubsistemaComunicacaoTextToImage {
             }
         )
 
-        let urlImagem = await responseOpenJourney.blob()
-        return  URL.createObjectURL(urlImagem); //blob é asinc ???
+        //let urlImagem = await responseOpenJourney.blob()
+        //return  URL.createObjectURL(urlImagem); //blob é asinc ???
+
+        let blobObject = await responseOpenJourney.blob()
+        let blobUint8array = new Uint8Array(await blobObject.arrayBuffer());
+        console.log(blobUint8array)
+        return  blobUint8array 
     
       }
     
