@@ -2,14 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { CreateCredencialAcessoDto } from './dto/create-credencial-acesso.dto';
 import { PrismaService } from 'src/database/PrismaService';
 import { UpdateCredencialAcessoDto } from './dto/update-credencial-acesso.dto';
+import RepositorioCredencialAcesso from 'src/repositorios/repositorio-credencial-acesso';
 
 //CadastroCredencialAcesso
 @Injectable()
 export class CredencialAcessoService {
-
+  repo: RepositorioCredencialAcesso;
   constructor(
     private prisma: PrismaService
-    ) {}
+    ) {
+      this.repo = new RepositorioCredencialAcesso(prisma)
+    }
 
   async existeCredencial(data: CreateCredencialAcessoDto) {
 
@@ -18,12 +21,7 @@ export class CredencialAcessoService {
   }
 
   getCredencial (login: string, senha: string){
-    return this.prisma.repositorioAcesso.findFirst({
-      where: {
-        login: login,
-        senha: senha
-      }
-    })
+    return this.repo.getCredencial(login, senha)
   }
 
 }

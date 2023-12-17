@@ -5,7 +5,7 @@ class FachadaComunicacaoT2T implements ISubsistemaComunicacaoTextToText{
 
     async obterPromptIA(prompt: string): Promise<any> {
   
-        const chaveBira = "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";
+        const chaveBira = "key";
         console.log("inicioFachada")
     
         // Método assinc
@@ -27,7 +27,7 @@ class FachadaComunicacaoT2T implements ISubsistemaComunicacaoTextToText{
 
         
         const responseJsom = await response.json()
-
+        console.log(responseJsom)
         return responseJsom.choices[0].message.content
         
         

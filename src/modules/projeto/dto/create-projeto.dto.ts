@@ -1,5 +1,5 @@
 export class CreateProjetoDto {
-  idProjeto: string 
+  idProjeto?: string 
   loginCliente: string 
   loginDesigner: string
   idLogo: string

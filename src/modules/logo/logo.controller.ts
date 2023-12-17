@@ -26,7 +26,7 @@ export class LogoController {
 
     const logoAux: CreateLogoDto = {
       imagem:  img,
-      loginCliente: data.cliente
+      loginCliente: 'data.cliente'
    }
     
     const logo = await this.logoService.cadastrarLogo(logoAux);
