@@ -25,12 +25,12 @@ export class LogoController {
     let img = await handler_1.handler(stringFormulario)
 
     const logoAux: CreateLogoDto = {
-      imagem:  img,
+      imagem:  "img",
       loginCliente: 'data.cliente'
    }
     
     const logo = await this.logoService.cadastrarLogo(logoAux);
-    return logo
+    return img
   }
   
 }
