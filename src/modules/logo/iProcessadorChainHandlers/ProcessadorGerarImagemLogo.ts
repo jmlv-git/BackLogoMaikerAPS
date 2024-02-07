@@ -17,7 +17,10 @@ class ProcessadorGerarImagemLogo implements IProcessadorChain{
         let fachadaComunicacaoT2I = new FachadaComunicacaoT2I ()
         let logo = await fachadaComunicacaoT2I.obterImagemIA(data)
         console.log("chegou a imagem", logo)
-        return logo
+        if (!this.next) {
+            return logo
+        }
+         return  this.next.handler(logo);
             
         
     }

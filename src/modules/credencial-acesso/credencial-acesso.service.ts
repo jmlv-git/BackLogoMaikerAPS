@@ -20,7 +20,7 @@ export class CredencialAcessoService {
    
   }
 
-  getCredencial (login: string, senha: string){
+  async getCredencial (login: string, senha: string){
     return this.repo.getCredencial(login, senha)
   }
 
