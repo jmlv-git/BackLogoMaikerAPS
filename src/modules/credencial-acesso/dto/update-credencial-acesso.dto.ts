@@ -1,4 +1,5 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCredencialAcessoDto } from './create-credencial-acesso.dto';
-
-export class UpdateCredencialAcessoDto extends PartialType(CreateCredencialAcessoDto) {}
+export class UpdateCredencialAcessoDto {
+    login: string
+    senhaAntiga: string
+    senhaNova: string
+}

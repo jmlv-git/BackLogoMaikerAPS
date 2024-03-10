@@ -1,20 +1,47 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { LogoService } from './logo.service';
-import { UpdateLogoDto } from './dto/update-logo.dto';
-import ProcessadorConverterFormulario from './iProcessadorChainHandlers/ProcessadorConverterFormulario';
-import GerarDescricaoGpt from './iProcessadorChainHandlers/ProcessadorGerarDescricao';
+import { Controller, Get, Post, Body, Patch, Param, Delete, OnModuleInit } from '@nestjs/common';
+
+import { Client, ClientKafka, Transport } from '@nestjs/microservices';
+
+import { Observable } from 'rxjs';
+import { Logo } from './entities/logo.entity';
 import { DescricaoCompletaDto } from './dto/descricao-completa';
-import { CreateLogoDto } from './dto/create-logo.dto';
-import { FachadaService } from '../fachada/fachada.service';
 
+
+//CredencialAcessoControlerMVP
 @Controller('logo')
-export class LogoController {
-  constructor(private readonly fachadaService: FachadaService) {}
+export class LogoController implements OnModuleInit {
+  @Client({
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        clientId: 'logo',
+        brokers: ['localhost:9092'],
+      },
+      consumer: {
+        groupId: 'logo-consumer',
+        allowAutoTopicCreation: true
+      }
+    }
+  })
 
-  @Post()
-  async create(@Body() data: DescricaoCompletaDto) {
-    
-    return this.fachadaService.criarLogo(data);
+  private client: ClientKafka;
+
+  async onModuleInit() {
+    const requestPatters = ['create-logo', 'get-all'];
+
+    requestPatters.forEach(async pattern => {
+      this.client.subscribeToResponseOf(pattern);
+      await this.client.connect();
+    });
   }
   
+
+  @Post()
+  logar(@Body() data: DescricaoCompletaDto): Observable<any> {
+    return this.client.send('create-logo', data);
+  }
+  @Post('get')
+  criar(@Body() login: string ): Observable<Logo> {
+    return this.client.send('get-all', login);
+  }
 }
